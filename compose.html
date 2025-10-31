@@ -149,7 +149,7 @@
             
             <div style="text-align:center; padding:30px 0;">
             
-              <h2 style="margin:0; font-weight:400;">We’ve Received Your Message</h2>
+              
             </div>
             <div style="background:#181818; padding:30px; line-height:1.6;">
               <p style="font-size:16px;">Hello <b>${name}</b>,</p>
@@ -169,7 +169,7 @@
 
     // Initialize live preview
     function updatePreview() {
-      emailPreview.srcdoc = generateHTML(nameInput.value || "Recipient", messageInput.value || "Thank you for contacting us.");
+      emailPreview.srcdoc = generateHTML(nameInput.value || "Recipient", messageInput.value || " ");
     }
     updatePreview();
 
