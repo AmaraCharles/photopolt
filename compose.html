@@ -188,46 +188,44 @@
     messageInput.addEventListener("input", updatePreview);
 
     // Send email through your proxy (avoids CORS)
-    document.getElementById("sendBtn").addEventListener("click", async () => {
-      const name = nameInput.value.trim();
-      const email = emailInput.value.trim();
-      const subject = subjectInput.value.trim();
-      const message = messageInput.value.trim();
-      const apiKey = apiInput.value.trim();
+document.getElementById("sendBtn").addEventListener("click", async () => {
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const subject = subjectInput.value.trim();
+  const message = messageInput.value.trim();
+  const apiKey = apiInput.value.trim();
 
-      if (!name || !email || !subject || !message || !apiKey) {
-        statusEl.textContent = "⚠️ Please fill all fields.";
-        return;
-      }
+  if (!name || !email || !subject || !message || !apiKey) {
+    statusEl.textContent = "⚠️ Please fill all fields.";
+    return;
+  }
 
-      statusEl.textContent = "📨 Sending...";
+  statusEl.textContent = "📨 Sending...";
 
-     try {
-  const res = await fetch("https://photo-server-zey9.onrender.com/transactions/send-email", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: `"PhotoPolitic" <support@photopclitic.com>`,  // 👈 display name + email
-      to: email,
-      subject,
-      html: generateHTML(name, message)
-    })
-  });
-} catch (error) {
-  console.error("Error sending email:", error);
-}
-
-
-        if (res.ok) {
-          statusEl.textContent = "✅ Email sent successfully!";
-        } else {
-          const data = await res.json();
-          statusEl.textContent = "❌ Error: " + JSON.stringify(data);
-        }
-      } catch (err) {
-        statusEl.textContent = "❌ Error: " + err.message;
-      }
+  try {
+    const res = await fetch("https://photo-server-zey9.onrender.com/transactions/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: `"PhotoPolitic" <support@photopclitic.com>`, // 👈 display name + email
+        to: email,
+        subject,
+        html: generateHTML(name, message),
+      }),
     });
+
+    if (res.ok) {
+      statusEl.textContent = "✅ Email sent successfully!";
+    } else {
+      const data = await res.json().catch(() => ({}));
+      statusEl.textContent = "❌ Error: " + (data.message || res.statusText);
+    }
+  } catch (error) {
+    console.error("Error sending email:", error);
+    statusEl.textContent = "❌ Error: " + error.message;
+  }
+});
+
   </script>
 </body>
 </html>
