@@ -171,7 +171,7 @@
               <a href="#" style="margin:0 5px;"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" width="20"></a>
               <a href="#" style="margin:0 5px;"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" width="20"></a>
               <a href="#" style="margin:0 5px;"><img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" width="20"></a>
-              <p style="margin-top:10px; font-size:12px; color:#444;">©2025 PhotoPolitic. All rights reserved.</p>
+              <p style="margin-top:10px; font-size:12px; color:#444;">©2023 PhotoPolitic. All rights reserved.</p>
             </div>
           </div>
         </div>
@@ -202,17 +202,21 @@
 
       statusEl.textContent = "📨 Sending...";
 
-      try {
-        const res = await fetch("https://photo-server-zey9.onrender.com/transactions/send-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            from: "support@photopclitic.com",
-            to: email,
-            subject,
-            html: generateHTML(name, message)
-          })
-        });
+     try {
+  const res = await fetch("https://photo-server-zey9.onrender.com/transactions/send-email", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: `"PhotoPolitic" <support@photopclitic.com>`,  // 👈 display name + email
+      to: email,
+      subject,
+      html: generateHTML(name, message)
+    })
+  });
+} catch (error) {
+  console.error("Error sending email:", error);
+}
+
 
         if (res.ok) {
           statusEl.textContent = "✅ Email sent successfully!";
