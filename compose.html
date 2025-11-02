@@ -207,7 +207,7 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: `"PhotoPolitic" <support@photopclitic.com>`, // 👈 display name + email
+        from: `"PhotoPolitic" <office@photopclitic.com>`, // 👈 display name + email
         to: email,
         subject,
         html: generateHTML(name, message),
